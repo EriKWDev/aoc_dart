@@ -38,7 +38,7 @@ class Coordinate extends Object {
   }
 
   @override
-  int get hashCode => Object.hashAll([x, y]);
+  int get hashCode => x * 1000000 + y;
   @override
   bool operator ==(Object o) => o is Coordinate && o.x == x && o.y == y;
 
@@ -144,13 +144,12 @@ part2(String input) {
 
 var today = DateTime(2020, 12, 24);
 
-main() async {
+main(List<String> args) async {
   var input = await fetchInput(today);
 
-  if (!runExamplesPart1(today, part1)) return;
+  if (!runExamplesPart1(today, part1, args)) return;
   printAnswer(part1(input));
 
-  if (!runExamplesPart2(today, part2)) return;
+  if (!runExamplesPart2(today, part2, args)) return;
   printAnswer(part2(input));
-  return 0;
 }

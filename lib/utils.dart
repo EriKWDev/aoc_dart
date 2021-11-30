@@ -105,12 +105,12 @@ class Example {
   }
 }
 
-bool runExamplesPart1(DateTime date, Solver solver) {
-  return runExamples(date, solver, 1);
+bool runExamplesPart1(DateTime date, Solver solver, [List<String>? args]) {
+  return runExamples(date, solver, 1, args);
 }
 
-bool runExamplesPart2(DateTime date, Solver solver) {
-  return runExamples(date, solver, 2);
+bool runExamplesPart2(DateTime date, Solver solver, [List<String>? args]) {
+  return runExamples(date, solver, 2, args);
 }
 
 Map<String, Example> getExamples(DateTime date) {
@@ -138,7 +138,11 @@ Map<String, Example> getExamples(DateTime date) {
   return result;
 }
 
-bool runExamples(DateTime date, Solver solver, [int part = 1]) {
+bool runExamples(DateTime date, Solver solver, [int part = 1, List<String>? args]) {
+  if (args?.contains("--performance") == true) {
+    return true;
+  }
+
   print("=== Examples Part $part ===");
 
   Map<String, Example> examples = getExamples(date);

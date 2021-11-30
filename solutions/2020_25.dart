@@ -30,12 +30,12 @@ part2(String input) {
 
 var today = DateTime(2020, 12, 25);
 
-main() async {
+main(List<String> args) async {
   var input = await fetchInput(today);
 
-  if (!runExamplesPart1(today, part1)) return;
+  if (!runExamplesPart1(today, part1, args)) return;
   printAnswer(part1(input));
 
-  if (!runExamplesPart2(today, part2)) return;
+  if (!runExamplesPart2(today, part2, args)) return;
   printAnswer(part2(input));
 }
