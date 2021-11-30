@@ -1,5 +1,5 @@
 import "package:test/test.dart";
-import "../solutions/2020_24.dart";
+import "../solutions/2020/2020_24.dart";
 
 main() {
   test("Parse line", () {
