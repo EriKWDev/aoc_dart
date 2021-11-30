@@ -4,3 +4,4 @@ env.json
 inputs/auto/
 .dart_tool/
 .packages/
+*.exe
