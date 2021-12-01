@@ -1,22 +1,28 @@
 import 'dart:convert';
 import 'dart:io';
 
-writeAutoInput(String filename, String content) {
-  var dir2 = Directory("${Directory.current.path}/inputs/auto");
+writeAutoInput(String filename, String content, [int? year]) {
+  var dir2 = year == null
+      ? Directory("${Directory.current.path}/inputs/auto")
+      : Directory("${Directory.current.path}/inputs/${year}/auto");
+
   if (!dir2.existsSync()) {
-    dir2.createSync();
+    dir2.createSync(recursive: true);
   }
 
   var file2 = File("${dir2.path}/$filename");
   if (!file2.existsSync()) {
-    file2.createSync();
+    file2.createSync(recursive: true);
   }
 
   file2.writeAsStringSync(content, flush: true);
 }
 
-String? getAutoInput(String filename) {
-  var dir2 = Directory("${Directory.current.path}/inputs/auto");
+String? getAutoInput(String filename, [int? year]) {
+  var dir2 = year == null
+      ? Directory("${Directory.current.path}/inputs/auto")
+      : Directory("${Directory.current.path}/inputs/${year}/auto");
+
   if (!dir2.existsSync()) {
     dir2.createSync(recursive: true);
   }
@@ -29,17 +35,19 @@ String? getAutoInput(String filename) {
   return file2.readAsStringSync();
 }
 
-File getInputFile(String filename) {
-  var dir = Directory("${Directory.current.path}/inputs");
+File getInputFile(String filename, [int? year]) {
+  var dir = year == null
+      ? Directory("${Directory.current.path}/inputs")
+      : Directory("${Directory.current.path}/inputs/${year}/");
 
   if (!dir.existsSync()) {
-    dir.createSync();
+    dir.createSync(recursive: true);
   }
 
   var file = File("${dir.path}/$filename");
 
   if (!file.existsSync()) {
-    file.createSync();
+    file.createSync(recursive: true);
   }
 
   return file;
@@ -68,11 +76,13 @@ Future<String> fetchInput(DateTime date, [String? session]) async {
   var daySring = date.day.toString().padLeft(2, "0");
   var filename = "${date.year}_${daySring}_${session.hashCode}.txt";
 
-  var content = getAutoInput(filename);
+  var content = getAutoInput(filename, date.year);
 
   if (content == null) {
     content = await fetchInputFromAOC(date, session);
-    writeAutoInput(filename, content);
+    if (!content.toLowerCase().contains("please don't repeatedly")) {
+      writeAutoInput(filename, content, date.year);
+    }
   }
 
   return content;
@@ -122,7 +132,7 @@ Map<String, Example> getExamples(DateTime date) {
     var daySring = date.day.toString().padLeft(2, "0");
     var filename = "${date.year}_${daySring}_$i.txt";
 
-    var file = getInputFile(filename);
+    var file = getInputFile(filename, date.year);
     var example = Example.fromInputFile(file);
 
     if (example != null) {

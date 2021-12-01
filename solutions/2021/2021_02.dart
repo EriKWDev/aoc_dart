@@ -8,7 +8,7 @@ part2(String input) {
   return 0;
 }
 
-var today = DateTime(2021, 12, 01);
+var today = DateTime(2021, 12, 02);
 
 main(List<String> args) async {
   var input = await fetchInput(today);

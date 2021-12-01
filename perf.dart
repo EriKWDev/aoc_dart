@@ -27,7 +27,7 @@ class Result extends Object {
 Future<Result> measurePerformance(String path) async {
   var done = false;
 
-  Future.delayed(const Duration(seconds: 15), () {
+  Future.delayed(const Duration(seconds: 25), () {
     done = true;
   });
 
@@ -35,22 +35,34 @@ Future<Result> measurePerformance(String path) async {
 
   List<Duration> times = [];
 
+  Process? process;
+
   while (!done) {
-    var process = await Process.start(path, ["--performance"]);
+    try {
+      process = await Process.start(path, ["--performance"]);
+      final stopwatch = Stopwatch()..start();
+      await process.exitCode;
+      stopwatch.stop();
 
-    final stopwatch = Stopwatch()..start();
-    await process.exitCode;
-    stopwatch.stop();
+      times.add(stopwatch.elapsed);
+      i++;
 
-    times.add(stopwatch.elapsed);
-    i++;
+      if (i >= 200) {
+        done = true;
+      }
 
-    if (i >= 150) {
-      done = true;
+      await process.kill();
+    } on ProcessException catch (e) {
+      print(e);
+      await process?.kill();
+      await Future.delayed(const Duration(milliseconds: 100));
+    } finally {
+      await Future.delayed(const Duration(milliseconds: 20));
     }
   }
 
-  var averageDuration = Duration(microseconds: times.reduce((value, element) => value + element).inMicroseconds ~/ i);
+  var averageDuration = Duration(microseconds: times.reduce((value, element) => value + element).inMicroseconds) ~/ i;
+
   await File(path).delete();
   return Result(duration: averageDuration, times: i, path: path);
 }
@@ -102,7 +114,7 @@ measurePerformanceForYear(int year) async {
   }
 }
 
-const maxConcurrent = 12;
+const maxConcurrent = 5;
 const years = [2021, 2020];
 
 void main() async {

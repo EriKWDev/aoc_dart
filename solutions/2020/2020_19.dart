@@ -11,7 +11,9 @@ StringBuffer build(int ruleNumber, [clearCache = true]) {
 
   if (cache.containsKey(ruleNumber)) return cache[ruleNumber]!;
 
-  StringBuffer stringBuffer = StringBuffer("(?:");
+  // (?: means non-capturing group, which boosts performance significantly.
+  // Regex won't try to caprure and assign a group id to matching data within a (?:).
+  StringBuffer stringBuffer = StringBuffer(r"(?:");
 
   var rule = rules[ruleNumber]!;
 
