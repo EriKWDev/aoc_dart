@@ -17,9 +17,10 @@ class Result extends Object {
 
   static const prettySeparator = ".";
 
+  String get time => (duration.inMicroseconds / 1000.0).toString();
+
   @override
   String toString() {
-    var time = duration.inMilliseconds.toString();
     return "${name.padRight(20, prettySeparator)}${prettySeparator}${time.padLeft(8, prettySeparator)} ms (ran $times times)";
   }
 }
@@ -95,7 +96,7 @@ measurePerformanceForYear(int year) async {
     stdout.write("Running...\r");
 
     concurrent.add(measurePerformance(path.split(".")[0] + ".exe").then((value) {
-      stdout.write("${value.name}: ${value.duration.inMilliseconds} ms\r");
+      stdout.write("${value.name}: ${value.time} ms\r");
       results.add(value);
     }));
 

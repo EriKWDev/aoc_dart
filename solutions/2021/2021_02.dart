@@ -2,13 +2,13 @@ import "package:aoc/utils.dart";
 
 var commandPattern = RegExp(r"^(\w).*(\d+)$", multiLine: true);
 
-var commandDelta = {
-  "d": [0, 1, 1],
-  "u": [0, -1, 1],
-  "f": [1, 0, 0]
-};
-
 part1(String input) {
+  var commandDelta = {
+    "d": [0, 1, 1],
+    "u": [0, -1, 1],
+    "f": [1, 0, 0]
+  };
+
   int h = 0;
   int d = 0;
 

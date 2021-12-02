@@ -1,7 +1,6 @@
 .env*
 env.json
 .vscode/
-inputs/auto/
 .dart_tool/
 .packages/
 *.exe

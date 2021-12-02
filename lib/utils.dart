@@ -85,7 +85,7 @@ Future<String> fetchInput(DateTime date, [String? session]) async {
     }
   }
 
-  return content;
+  return content.trim();
 }
 
 typedef Solver = dynamic Function(String input);

@@ -40,7 +40,7 @@ part1(String input) {
   }
 
   for (var tile in tiles) {
-    print(tile.id);
+    // print(tile.id);
   }
   return 0;
 }
