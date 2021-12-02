@@ -47,7 +47,7 @@ Future<Result> measurePerformance(String path) async {
       times.add(stopwatch.elapsed);
       i++;
 
-      if (i >= 200) {
+      if (i >= 100) {
         done = true;
       }
 

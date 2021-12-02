@@ -5,3 +5,5 @@ inputs/auto/
 .dart_tool/
 .packages/
 *.exe
+*.mp4
+visualizations/
