@@ -28,13 +28,11 @@ class Result extends Object {
 Future<Result> measurePerformance(String path) async {
   var done = false;
 
-  Future.delayed(const Duration(seconds: 25), () {
-    done = true;
-  });
-
   int i = 0;
 
   List<Duration> times = [];
+
+  Duration totalTime = Duration.zero;
 
   Process? process;
 
@@ -46,9 +44,10 @@ Future<Result> measurePerformance(String path) async {
       stopwatch.stop();
 
       times.add(stopwatch.elapsed);
+      totalTime += stopwatch.elapsed;
       i++;
 
-      if (i >= 100) {
+      if (i >= 100 || totalTime > const Duration(seconds: 25)) {
         done = true;
       }
 
@@ -116,7 +115,7 @@ measurePerformanceForYear(int year) async {
 }
 
 const maxConcurrent = 5;
-const years = [2021, 2020];
+const years = [2021, 2020, 2019];
 
 void main() async {
   for (var year in years) {

@@ -10,39 +10,80 @@ Don't forget to have `AOC_SESSION=<your_session_token>` loaded into your environ
 Here are the results, sorted by year and speed:
 
 ### `perf.dart`: By compiling and running each solution
+#### By year and time
 ```
 Performance Results for 2021
-2021_01.................6.596 ms (ran 100 times)
-2021_03.................7.471 ms (ran 100 times)
-2021_02.................8.502 ms (ran 100 times)
+2021_03.................6.494 ms (ran 100 times)
+2021_01.................6.821 ms (ran 100 times)
+2021_02.................7.866 ms (ran 100 times)
 
 Performance Results for 2020
-2020_20.................6.648 ms (ran 100 times)
-2020_19................41.038 ms (ran 100 times)
-2020_25................76.064 ms (ran 100 times)
-2020_23..............2204.557 ms (ran 12 times)
-2020_24..............2359.909 ms (ran 11 times)
+2020_20..................6.86 ms (ran 100 times)
+2020_19.................40.36 ms (ran 100 times)
+2020_25.................75.58 ms (ran 100 times)
+2020_23...............2175.11 ms (ran 12 times)
+2020_24..............2362.493 ms (ran 11 times)
+
+Performance Results for 2019
+2019_01.................6.047 ms (ran 100 times)
+2019_02................58.886 ms (ran 100 times)
 ```
 ### `perf2.dart`: By importing and running part1 and part2 separately
+#### By year and time
 ```
 Performance Results for 2021
-Performance Results for 2021
-2021_01 part 1.................0.1054 ms (ran 1000 times)
-2021_01 part 2.................0.2094 ms (ran 1000 times)
-2021_03 part 2.................0.2112 ms (ran 1000 times)
-2021_03 part 1.................0.2792 ms (ran 1000 times)
-2021_02 part 2.................0.6823 ms (ran 1000 times)
-2021_02 part 1.................0.7204 ms (ran 1000 times)
+2021_01 part 1.................0.1119 ms (ran 1000 times)
+2021_03 part 2.................0.2179 ms (ran 1000 times)
+2021_01 part 2.................0.2181 ms (ran 1000 times)
+2021_03 part 1.................0.2877 ms (ran 1000 times)
+2021_02 part 2.................0.7025 ms (ran 1000 times)
+2021_02 part 1.................0.7151 ms (ran 1000 times)
 
 Performance Results for 2020
 2020_20 part 2.................0.0000 ms (ran 1000 times)
 2020_25 part 2.................0.0000 ms (ran 1000 times)
-2020_23 part 1.................0.0184 ms (ran 1000 times)
-2020_20 part 1.................0.5856 ms (ran 1000 times)
-2020_19 part 1.................1.7994 ms (ran 1000 times)
-2020_19 part 2.................2.8783 ms (ran 1000 times)
-2020_24 part 1.................5.6818 ms (ran 881 times)
-2020_25 part 1.................58.2201 ms (ran 86 times)
-2020_23 part 2.................2076.0743 ms (ran 3 times)
-2020_24 part 2.................2287.6843 ms (ran 3 times)
+2020_23 part 1.................0.0178 ms (ran 1000 times)
+2020_20 part 1.................0.5616 ms (ran 1000 times)
+2020_19 part 1.................1.8792 ms (ran 1000 times)
+2020_19 part 2.................3.0408 ms (ran 1000 times)
+2020_24 part 1.................5.8103 ms (ran 861 times)
+2020_25 part 1.................58.9771 ms (ran 85 times)
+2020_23 part 2.................2206.4427 ms (ran 3 times)
+2020_24 part 2.................2328.6220 ms (ran 3 times)
+
+Performance Results for 2019
+2019_01 part 1.................0.0074 ms (ran 1000 times)
+2019_01 part 2.................0.0095 ms (ran 1000 times)
+2019_02 part 1.................0.0165 ms (ran 1000 times)
+2019_02 part 2.................42.7350 ms (ran 118 times)
+```
+
+#### By date
+```
+Performance Results for 2021
+2021_01 part 1.................0.1110 ms (ran 1000 times)
+2021_01 part 2.................0.2180 ms (ran 1000 times)
+2021_02 part 1.................0.7150 ms (ran 1000 times)
+2021_02 part 2.................0.7020 ms (ran 1000 times)
+2021_03 part 1.................0.2870 ms (ran 1000 times)
+2021_03 part 2.................0.2170 ms (ran 1000 times)
+
+Performance Results for 2020
+2020_19 part 1.................1.8790 ms (ran 1000 times)
+2020_19 part 2.................3.0400 ms (ran 1000 times)
+2020_20 part 1.................0.5610 ms (ran 1000 times)
+2020_20 part 2.................0.0000 ms (ran 1000 times)
+2020_23 part 1.................0.0170 ms (ran 1000 times)
+2020_23 part 2.................2206.4420 ms (ran 3 times)
+2020_24 part 1.................5.8100 ms (ran 861 times)
+2020_24 part 2.................2328.6220 ms (ran 3 times)
+2020_25 part 1.................58.9770 ms (ran 85 times)
+2020_25 part 2.................0.0000 ms (ran 1000 times)
+
+Performance Results for 2019
+2019_01 part 1.................0.0070 ms (ran 1000 times)
+2019_01 part 2.................0.0090 ms (ran 1000 times)
+2019_02 part 1.................0.0160 ms (ran 1000 times)
+2019_02 part 2.................42.7350 ms (ran 118 times)
+
 ```

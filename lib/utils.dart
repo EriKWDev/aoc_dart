@@ -15,7 +15,7 @@ writeAutoInput(String filename, String content, [int? year]) {
     file2.createSync(recursive: true);
   }
 
-  file2.writeAsStringSync(content, flush: true);
+  file2.writeAsStringSync(content.trim(), flush: true);
 }
 
 String? getAutoInput(String filename, [int? year]) {
@@ -101,12 +101,13 @@ class Example {
     var lines = input.readAsLinesSync();
 
     if (lines.length > 1 && lines[0] != "") {
-      var part1 = int.tryParse(lines[0]) ?? lines[0];
+      dynamic part1 = int.tryParse(lines[0]) ?? lines[0];
+      part1 = (part1 == "" || part1 == "null") ? null : part1;
       dynamic part2 = int.tryParse(lines[1]) ?? lines[1];
       part2 = (part2 == "" || part2 == "null") ? null : part2;
 
       lines.removeRange(0, part2 == null ? 2 : 3);
-      var input = lines.join("\n");
+      var input = lines.join("\n").trim();
 
       return Example(part1Answer: part1, part2Answer: part2, input: input);
     }
@@ -148,12 +149,14 @@ Map<String, Example> getExamples(DateTime date) {
   return result;
 }
 
+bool isExample = false;
+
 bool runExamples(DateTime date, Solver solver, [int part = 1, List<String>? args]) {
   if (args?.contains("--performance") == true) {
     return true;
   }
 
-  print("=== Examples Part $part ===");
+  print("=== Examples ${date.year} ${date.day.toString().padLeft(2, '0')}, Part $part ===");
 
   Map<String, Example> examples = getExamples(date);
 
@@ -161,12 +164,17 @@ bool runExamples(DateTime date, Solver solver, [int part = 1, List<String>? args
   int skipped = 0;
 
   for (var entry in examples.entries) {
+    isExample = true;
     var filename = entry.key;
     var example = entry.value;
 
     var input = example.input;
-    if (part == 2 && example.part2Answer == null) {
-      print("$filename, part $part: No answer provided in file. Skipping...");
+
+    var skip2 = part == 2 && example.part2Answer == null;
+    var skip1 = part == 1 && example.part1Answer == null;
+
+    if (skip2 || skip1) {
+      print("$filename, part $part: SKIP: No answer provided in file");
       skipped++;
       continue;
     }
@@ -179,14 +187,18 @@ bool runExamples(DateTime date, Solver solver, [int part = 1, List<String>? args
     var correctAnswer = part == 1 ? example.part1Answer : example.part2Answer;
 
     if (myAnswer != correctAnswer) {
-      print("$filename, part $part: ERROR, expected $correctAnswer, got $myAnswer");
+      print("$filename, part $part: ERROR: expected $correctAnswer, got $myAnswer");
     } else {
-      print("$filename, part $part: OK ($myAnswer)");
+      print("$filename, part $part: OK: $myAnswer");
       succeeded++;
     }
+
+    isExample = false;
   }
   print("\n$succeeded/${examples.length - skipped} Succeeded");
-  print("=======================\n");
+  print("================================\n");
+
+  isExample = false;
 
   return succeeded == examples.length - skipped;
 }

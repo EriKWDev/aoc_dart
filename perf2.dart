@@ -2,27 +2,38 @@ import 'dart:async';
 
 import "./lib/utils.dart";
 
+// 2021
 import "./solutions/2021/2021_01.dart" as solution202101;
 import "./solutions/2021/2021_02.dart" as solution202102;
 import "./solutions/2021/2021_03.dart" as solution202103;
 
+// 2020
 import "./solutions/2020/2020_19.dart" as solution202019;
 import "./solutions/2020/2020_20.dart" as solution202020;
 import "./solutions/2020/2020_23.dart" as solution202023;
 import "./solutions/2020/2020_24.dart" as solution202024;
 import "./solutions/2020/2020_25.dart" as solution202025;
 
+// 2019
+import "./solutions/2019/2019_01.dart" as solution201901;
+import "./solutions/2019/2019_02.dart" as solution201902;
+
 var allParts = {
   // 2021
   solution202101.today: [solution202101.part1, solution202101.part2],
   solution202102.today: [solution202102.part1, solution202102.part2],
   solution202103.today: [solution202103.part1, solution202103.part2],
+
   // 2020
   solution202019.today: [solution202019.part1, solution202019.part2],
   solution202020.today: [solution202020.part1, solution202020.part2],
   solution202023.today: [solution202023.part1, solution202023.part2],
   solution202024.today: [solution202024.part1, solution202024.part2],
   solution202025.today: [solution202025.part1, solution202025.part2],
+
+  // 2019
+  solution201901.today: [solution201901.part1, solution201901.part2],
+  solution201902.today: [solution201902.part1, solution201902.part2],
 };
 
 class Result {
@@ -42,7 +53,7 @@ class Result {
 
   @override
   String toString() {
-    return "$name ........ $averageTime";
+    return "$name.................${durationToMillisecondString(averageTime)} (ran ${timesRun} times)";
   }
 
   const Result({required this.totalTime, required this.timesRun, required this.name});
@@ -67,7 +78,7 @@ class CombinedResult extends Result {
 
   @override
   String toString() {
-    var result = "$name..............$averageTime";
+    var result = "$name.................${durationToMillisecondString(averageTime)}";
 
     result += "\n  $result1";
     result += "\n  $result2";
@@ -77,6 +88,13 @@ class CombinedResult extends Result {
 }
 
 typedef Part = dynamic Function(String input);
+
+String durationToMillisecondString(Duration duration) {
+  var avgMilliseconds = duration.inMicroseconds.toDouble() / 1000.0;
+  var ms = avgMilliseconds.toStringAsFixed(4);
+
+  return "$ms ms";
+}
 
 Future<Result> measurePart(Part part, String input, String name) async {
   var done = false;
@@ -138,13 +156,7 @@ void main(List<String> args) async {
     awaitedResults.add(await result);
   }
 
-  awaitedResults.sort((a, b) => a.averageTime.compareTo(b.averageTime));
-
-  print("");
-  for (var result in awaitedResults) {
-    print(result);
-    print("");
-  }
+  awaitedResults.sort((a, b) => a.name.compareTo(b.name));
 
   Map<String, List<Result>> partResultsByYear = {};
 
@@ -172,16 +184,28 @@ void main(List<String> args) async {
   }
   print("");
 
+  print("By speed\n");
+
   for (var entry in partResultsByYear.entries) {
     var results = entry.value;
     results.sort((a, b) => a.averageTime.compareTo(b.averageTime));
     print("Performance Results for ${entry.key}");
 
     for (var result in results) {
-      var avgMilliseconds = result.totalTime.inMicroseconds.toDouble() / result.timesRun.toDouble() / 1000.0;
-      var ms = avgMilliseconds.toStringAsFixed(4);
+      print(result);
+    }
+    print("");
+  }
 
-      print("${result.name}.................$ms ms (ran ${result.timesRun} times)");
+  print("By date\n");
+
+  for (var entry in partResultsByYear.entries) {
+    var results = entry.value;
+    results.sort((a, b) => a.name.compareTo(b.name));
+    print("Performance Results for ${entry.key}");
+
+    for (var result in results) {
+      print(result);
     }
     print("");
   }
