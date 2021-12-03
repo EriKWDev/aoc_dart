@@ -4,6 +4,7 @@ import "./lib/utils.dart";
 
 import "./solutions/2021/2021_01.dart" as solution202101;
 import "./solutions/2021/2021_02.dart" as solution202102;
+import "./solutions/2021/2021_03.dart" as solution202103;
 
 import "./solutions/2020/2020_19.dart" as solution202019;
 import "./solutions/2020/2020_20.dart" as solution202020;
@@ -15,6 +16,7 @@ var allParts = {
   // 2021
   solution202101.today: [solution202101.part1, solution202101.part2],
   solution202102.today: [solution202102.part1, solution202102.part2],
+  solution202103.today: [solution202103.part1, solution202103.part2],
   // 2020
   solution202019.today: [solution202019.part1, solution202019.part2],
   solution202020.today: [solution202020.part1, solution202020.part2],
@@ -95,7 +97,7 @@ Future<Result> measurePart(Part part, String input, String name) async {
     totalTime += stopWatch.elapsed;
     n++;
 
-    if (totalTime > Duration(seconds: 5) || n >= 100) {
+    if (totalTime > Duration(seconds: 5) || n >= 1000) {
       done = true;
     }
   }
