@@ -17,6 +17,7 @@ import "./solutions/2020/2020_25.dart" as solution202025;
 // 2019
 import "./solutions/2019/2019_01.dart" as solution201901;
 import "./solutions/2019/2019_02.dart" as solution201902;
+import "./solutions/2019/2019_03.dart" as solution201903;
 
 var allParts = {
   // 2021
@@ -34,6 +35,7 @@ var allParts = {
   // 2019
   solution201901.today: [solution201901.part1, solution201901.part2],
   solution201902.today: [solution201902.part1, solution201902.part2],
+  solution201903.today: [solution201903.part1, solution201903.part2],
 };
 
 class Result {

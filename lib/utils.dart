@@ -195,7 +195,7 @@ bool runExamples(DateTime date, Solver solver, [int part = 1, List<String>? args
 
     isExample = false;
   }
-  print("\n$succeeded/${examples.length - skipped} Succeeded");
+  print("\n$succeeded/${examples.length - skipped} Succeeded (Skipped: $skipped)");
   print("================================\n");
 
   isExample = false;
