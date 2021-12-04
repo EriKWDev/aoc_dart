@@ -1,7 +1,6 @@
 #!/usr/bin/env dart
 
 import 'dart:async';
-
 import "./lib/utils.dart";
 
 // 2021
@@ -24,6 +23,13 @@ import "./solutions/2019/2019_03.dart" as solution201903;
 import "./solutions/2019/2019_04.dart" as solution201904;
 import "./solutions/2019/2019_08.dart" as solution201908;
 
+// 2015
+import "./solutions/2015/2015_01.dart" as solution201501;
+import "./solutions/2015/2015_02.dart" as solution201502;
+import "./solutions/2015/2015_03.dart" as solution201503;
+import "./solutions/2015/2015_04.dart" as solution201504;
+import "./solutions/2015/2015_05.dart" as solution201505;
+
 var allParts = {
   // 2021
   solution202101.today: [solution202101.part1, solution202101.part2],
@@ -44,6 +50,13 @@ var allParts = {
   solution201903.today: [solution201903.part1, solution201903.part2],
   solution201904.today: [solution201904.part1, solution201904.part2],
   solution201908.today: [solution201908.part1, solution201908.part2],
+
+  // 2015
+  solution201501.today: [solution201501.part1, solution201501.part2],
+  solution201502.today: [solution201502.part1, solution201502.part2],
+  solution201503.today: [solution201503.part1, solution201503.part2],
+  solution201504.today: [solution201504.part1, solution201504.part2],
+  solution201505.today: [solution201505.part1, solution201505.part2],
 };
 
 class Result {

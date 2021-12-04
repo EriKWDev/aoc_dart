@@ -54,10 +54,10 @@ Future<Result> measurePerformance(String path) async {
       }
 
       await process.kill();
+      await process.exitCode;
     } on ProcessException catch (e) {
-      print(e);
       await process?.kill();
-      await Future.delayed(const Duration(milliseconds: 100));
+      await Future.delayed(const Duration(milliseconds: 50));
     } finally {
       await Future.delayed(const Duration(milliseconds: 20));
     }
@@ -117,7 +117,7 @@ measurePerformanceForYear(int year) async {
 }
 
 const maxConcurrent = 5;
-const years = [2021, 2020, 2019];
+const years = [2021, 2020, 2019, 2015];
 
 void main() async {
   for (var year in years) {
