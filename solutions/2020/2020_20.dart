@@ -1,33 +1,50 @@
 import "package:aoc/utils.dart";
 
 var emptyLinePatten = RegExp(r"^$", multiLine: true);
+var numberPattern = RegExp(r"(\d+)");
 
 class Tile {
   final int id;
-  final List<String> top;
-  final List<String> bottom;
-  final List<String> left;
-  final List<String> right;
+  final List<String> sides;
 
-  const Tile({
-    required this.id,
-    required this.top,
-    required this.bottom,
-    required this.left,
-    required this.right,
-  });
+  int get hashCode => id;
+
+  Tile({required this.id, required this.sides});
 
   factory Tile.fromString(String string) {
     var lines = string.split("\n");
-    int id = int.parse(lines[0].substring(4, 9));
+    int id = int.parse(numberPattern.firstMatch(lines[0])!.group(1)!);
 
-    return Tile(
-        id: id,
-        top: lines[1].split(""),
-        bottom: lines.last.split(""),
-        left: lines.last.split(""),
-        right: lines.last.split(""));
+    StringBuffer left = StringBuffer();
+    StringBuffer right = StringBuffer();
+
+    for (int i = 1; i < lines.length; i++) {
+      left.write(lines[i][0]);
+      right.write(lines[i][lines[i].length - 1]);
+    }
+
+    var sides = [lines[1], lines.last, left.toString(), right.toString()];
+    sides.addAll(sides.map((e) => reverseString(e)).toList());
+
+    return Tile(id: id, sides: sides);
   }
+
+  @override
+  String toString() {
+    return id.toString();
+  }
+}
+
+String reverseString(String s) {
+  var length = s.length;
+  var charCodes = List.filled(length, 0);
+  int i = 0;
+  for (var index = length - 1; index >= 0; index--) {
+    charCodes[i] = s.codeUnitAt(index);
+    i++;
+  }
+
+  return new String.fromCharCodes(charCodes);
 }
 
 part1(String input) {
@@ -35,13 +52,20 @@ part1(String input) {
 
   for (var match in input.split(emptyLinePatten)) {
     if (match.isNotEmpty) {
-      tiles.add(Tile.fromString(match.trim()));
+      var tile = Tile.fromString(match.trim());
+
+      tiles.add(tile);
     }
   }
 
+  Map<int, Set<String>> neighbours = {};
+
   for (var tile in tiles) {
-    // print(tile.id);
+    if (!neighbours.containsKey(tile.id)) {
+      neighbours[tile.id] = {};
+    }
   }
+
   return 0;
 }
 

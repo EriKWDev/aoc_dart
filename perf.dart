@@ -1,3 +1,5 @@
+#!/usr/bin/env dart
+
 import "dart:io";
 
 Future<void> compileSolution(String path) async {
