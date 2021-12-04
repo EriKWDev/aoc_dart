@@ -1,23 +1,23 @@
-#!/usr/bin/env dart
-/*
-Copyright (c) Erik W. Gren
-
-List<String> lines = input.split("\n");
-List<String> chunks = input.split("\n\n");
-List<int> numbers = input.split(",").map((n) => int.parse(n)).toList();
-
-var numbersPattern = RegExp(r"(\d+)", multiLine: true);
-List<int> numbers = numbersPattern.allMatches(input).map((m) => int.parse(m.group(1)!)).toList();
-*/
+// Copyright (c) Erik W. Gren. See LICENSE
 
 import "package:aoc/utils.dart";
 
+getData(String input) {
+  // List<String> lines = input.split("\n"); return lines;
+  // List<String> chunks = input.split("\n\n"); return chunks;
+  // List<String> items = input.split(""); return items;
+  // List<int> numbers = input.split(",").map((n) => int.parse(n)).toList(); return numbers;
+  // var numbersPattern = RegExp(r"(\d+)", multiLine: true); List<int> numbers = numbersPattern.allMatches(input).map((m) => int.parse(m.group(1)!)).toList(); return numbers;
+}
+
 part1(String input) {
+  var data = getData(input);
   return 0;
 }
 
 part2(String input) {
-  return part1(input);
+  var data = getData(input);
+  return 0;
 }
 
 var today = DateTime(2021, 12, 04);

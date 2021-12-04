@@ -10,7 +10,10 @@ Don't forget to have `AOC_SESSION=<your_session_token>` loaded into your environ
 Here are the results, sorted by year and speed:
 
 ### `perf.dart`: By compiling and running each solution
-#### By year and time
+
+<details>
+<summary>Performance by year and execution time</summary>
+
 ```
 Performance Results for 2021
 2021_01.................6.478 ms (ran 100 times)
@@ -32,8 +35,13 @@ Performance Results for 2019
 2019_04...............312.774 ms (ran 80 times)
 2019_03...............339.544 ms (ran 74 times)
 ```
+</details>
+
 ### `perf2.dart`: By importing and running part1 and part2 separately
-#### By year, part and execution time
+
+<details>
+<summary>Performance by year, part and execution time</summary>
+
 ```
 Performance Results for 2021
 2021_01 part 1.................0.1150 ms (ran 1000 times)
@@ -69,8 +77,12 @@ Performance Results for 2019
 2019_03 part 2.................180.4940 ms (ran 28 times)
 2019_04 part 2.................202.5300 ms (ran 25 times)
 ```
+</details>
 
-#### By year, date and part
+
+<details>
+<summary>Performance by year, date and part time</summary>
+
 ```
 Performance Results for 2021
 2021_01 part 1.................0.1150 ms (ran 1000 times)
@@ -106,3 +118,4 @@ Performance Results for 2019
 2019_08 part 1.................0.8310 ms (ran 1000 times)
 2019_08 part 2.................0.7620 ms (ran 1000 times)
 ```
+</details>

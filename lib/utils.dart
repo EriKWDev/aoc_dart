@@ -57,15 +57,74 @@ String getSession() {
   return Platform.environment["AOC_SESSION"] ?? jsonDecode(File("env.json").readAsStringSync())["sessions"][0]!;
 }
 
-Future<String> fetchInputFromAOC(DateTime date, String session) async {
-  var url = Uri.https("adventofcode.com", "/${date.year}/day/${date.day}/input");
+String aocFilename(DateTime date, String session) {
+  var daySring = date.day.toString().padLeft(2, "0");
+  var filename = "${date.year}_${daySring}_${session.hashCode}.txt";
 
+  return filename;
+}
+
+Future<String?> fetchInputFromAOC(DateTime date, String session, [int retries = 0]) async {
+  var actualDate = DateTime.fromMicrosecondsSinceEpoch(
+      DateTime(date.year, date.month, date.day, 6, 0, 0, 0).microsecondsSinceEpoch,
+      isUtc: true);
+
+  var difference = actualDate.difference(DateTime.now().toUtc());
+
+  if (difference > const Duration(days: 1)) {
+    print("WARNING: The provided date is too far in the future");
+    return null;
+  } else {
+    while (difference > Duration.zero) {
+      print("INFO: Waiting for input to open (${difference.inSeconds} s) ($difference)");
+
+      var waitTime = const Duration(seconds: 10);
+
+      var updatedDiff = actualDate.difference(DateTime.now().toUtc());
+
+      if (updatedDiff < waitTime) {
+        waitTime = updatedDiff;
+      }
+
+      await Future.delayed(waitTime);
+      difference -= waitTime;
+    }
+  }
+
+  Future<String?> retry([String? message]) async {
+    const n = 4;
+
+    if (retries + 1 <= n) {
+      int s = (retries + 1) * 3 + retries;
+      print("INFO: Retrying to fetch input in $s s... ${retries + 1}/$n ($message)");
+      await Future.delayed(Duration(seconds: s));
+      return fetchInputFromAOC(date, session, retries + 1);
+    }
+
+    return null;
+  }
+
+  var filename = aocFilename(date, session);
+  var url = Uri.https("adventofcode.com", "/${date.year}/day/${date.day}/input");
   var request = await HttpClient().getUrl(url);
 
   request.cookies.add(Cookie("session", session));
 
+  print("INFO: Fetching input");
   var response = await request.close();
+
+  if (response.statusCode.toString()[0] != "2") {
+    return retry(response.statusCode.toString());
+  }
+
   var content = await response.transform(utf8.decoder).join();
+  var lowerContent = content.toLowerCase();
+
+  if (lowerContent.contains("please don't repeatedly")) {
+    return retry(content);
+  }
+
+  writeAutoInput(filename, content, date.year);
 
   return content;
 }
@@ -73,17 +132,11 @@ Future<String> fetchInputFromAOC(DateTime date, String session) async {
 Future<String> fetchInput(DateTime date, [String? session]) async {
   session ??= getSession();
 
-  var daySring = date.day.toString().padLeft(2, "0");
-  var filename = "${date.year}_${daySring}_${session.hashCode}.txt";
+  String? content;
 
-  var content = getAutoInput(filename, date.year);
-
-  if (content == null) {
-    content = await fetchInputFromAOC(date, session);
-    if (!content.toLowerCase().contains("please don't repeatedly")) {
-      writeAutoInput(filename, content, date.year);
-    }
-  }
+  content ??= getAutoInput(aocFilename(date, session), date.year);
+  content ??= await fetchInputFromAOC(date, session);
+  content ??= "";
 
   return content.trim();
 }
@@ -156,7 +209,7 @@ bool runExamples(DateTime date, Solver solver, [int part = 1, List<String>? args
     return true;
   }
 
-  print("=== Examples ${date.year} ${date.day.toString().padLeft(2, '0')}, Part $part ===");
+  print("\n=== Examples ${date.year} ${date.day.toString().padLeft(2, '0')}, Part $part ===");
 
   Map<String, Example> examples = getExamples(date);
 
@@ -205,6 +258,6 @@ bool runExamples(DateTime date, Solver solver, [int part = 1, List<String>? args
 
 void printAnswer(dynamic answer) {
   if (answer != null) {
-    print("Answer: $answer\n");
+    print("Answer: $answer");
   }
 }
