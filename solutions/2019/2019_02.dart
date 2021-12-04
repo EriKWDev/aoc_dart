@@ -4,9 +4,11 @@ class IntcodeComputer {
   List<int> initialMemory;
   List<int> memory;
   int location;
+  int initialLocation;
 
   IntcodeComputer(this.memory, [this.location = 0])
-      : initialMemory = List.generate(memory.length, (index) => memory[index]);
+      : initialMemory = List.generate(memory.length, (index) => memory[index]),
+        initialLocation = location;
 
   factory IntcodeComputer.fromInput(String input, [int location = 0]) {
     var initialMemory = input.split(",").map((e) => int.parse(e)).toList();
@@ -21,7 +23,7 @@ class IntcodeComputer {
 
   reset() {
     memory = List.generate(initialMemory.length, (index) => initialMemory[index]);
-    location = 0;
+    location = initialLocation;
     halted = false;
   }
 
@@ -37,7 +39,7 @@ class IntcodeComputer {
     memory[address] = value;
   }
 
-  read(int address) {
+  int read(int address) {
     return memory[address];
   }
 

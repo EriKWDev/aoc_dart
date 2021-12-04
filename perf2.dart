@@ -6,6 +6,7 @@ import "./lib/utils.dart";
 import "./solutions/2021/2021_01.dart" as solution202101;
 import "./solutions/2021/2021_02.dart" as solution202102;
 import "./solutions/2021/2021_03.dart" as solution202103;
+import "./solutions/2021/2021_04.dart" as solution202104;
 
 // 2020
 import "./solutions/2020/2020_19.dart" as solution202019;
@@ -19,12 +20,14 @@ import "./solutions/2019/2019_01.dart" as solution201901;
 import "./solutions/2019/2019_02.dart" as solution201902;
 import "./solutions/2019/2019_03.dart" as solution201903;
 import "./solutions/2019/2019_04.dart" as solution201904;
+import "./solutions/2019/2019_08.dart" as solution201908;
 
 var allParts = {
   // 2021
   solution202101.today: [solution202101.part1, solution202101.part2],
   solution202102.today: [solution202102.part1, solution202102.part2],
   solution202103.today: [solution202103.part1, solution202103.part2],
+  solution202104.today: [solution202104.part1, solution202104.part2],
 
   // 2020
   solution202019.today: [solution202019.part1, solution202019.part2],
@@ -38,6 +41,7 @@ var allParts = {
   solution201902.today: [solution201902.part1, solution201902.part2],
   solution201903.today: [solution201903.part1, solution201903.part2],
   solution201904.today: [solution201904.part1, solution201904.part2],
+  solution201908.today: [solution201908.part1, solution201908.part2],
 };
 
 class Result {
