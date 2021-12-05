@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:html/parser.dart' show parse;
 
 writeAutoInput(String filename, String content, [int? year]) {
   var dir2 = year == null
@@ -64,6 +65,27 @@ String aocFilename(DateTime date, String session) {
   return filename;
 }
 
+Future<void> waitForNow(DateTime date) async {
+  var difference = date.difference(DateTime.now().toUtc());
+
+  while (difference > Duration.zero) {
+    print("INFO: Waiting ${difference.inSeconds} s for input to open ($difference)");
+
+    var waitTime = const Duration(seconds: 10);
+
+    var updatedDiff = date.difference(DateTime.now().toUtc());
+
+    if (updatedDiff < waitTime) {
+      waitTime = updatedDiff;
+    }
+
+    if (waitTime <= Duration.zero) break;
+
+    await Future.delayed(waitTime);
+    difference -= waitTime;
+  }
+}
+
 Future<String?> fetchInputFromAOC(DateTime date, String session, [int retries = 0]) async {
   var actualDate = DateTime.fromMicrosecondsSinceEpoch(
       DateTime(date.year, date.month, date.day, 6, 0, 0, 0).microsecondsSinceEpoch,
@@ -75,20 +97,7 @@ Future<String?> fetchInputFromAOC(DateTime date, String session, [int retries = 
     print("WARNING: The provided date is too far in the future");
     return null;
   } else {
-    while (difference > Duration.zero) {
-      print("INFO: Waiting for input to open (${difference.inSeconds} s) ($difference)");
-
-      var waitTime = const Duration(seconds: 10);
-
-      var updatedDiff = actualDate.difference(DateTime.now().toUtc());
-
-      if (updatedDiff < waitTime) {
-        waitTime = updatedDiff;
-      }
-
-      await Future.delayed(waitTime);
-      difference -= waitTime;
-    }
+    await waitForNow(actualDate);
   }
 
   Future<String?> retry([String? message]) async {
@@ -109,6 +118,7 @@ Future<String?> fetchInputFromAOC(DateTime date, String session, [int retries = 
   var request = await HttpClient().getUrl(url);
 
   request.cookies.add(Cookie("session", session));
+  request.followRedirects = true;
 
   print("INFO: Fetching input");
   var response = await request.close();
@@ -260,4 +270,43 @@ void printAnswer(dynamic answer) {
   if (answer != null) {
     print("Answer: $answer");
   }
+}
+
+Future<bool> submit1(DateTime date, dynamic answer, [List<String>? args]) async {
+  return await submit(date, 1, answer, args);
+}
+
+Future<bool> submit2(DateTime date, dynamic answer, [List<String>? args]) async {
+  return await submit(date, 2, answer, args);
+}
+
+Future<bool> submit(DateTime date, int part, dynamic answer, [List<String>? args]) async {
+  if (answer == null) return false;
+
+  print("INFO: Submitting '$answer' for ${date.year} ${date.day.toString().padLeft(2, '0')} part $part...");
+
+  var url = Uri.https("adventofcode.com", "/${date.year}/day/${date.day}/answer");
+
+  var request = await HttpClient().postUrl(url);
+  request.headers.set("accept", "application/json");
+  request.headers.set("cache-control", "no-cache");
+  request.headers.set("content-type", "application/x-www-form-urlencoded");
+  request.cookies.add(Cookie("session", getSession()));
+  var data = "level=$part&answer=$answer";
+  request.write(data);
+
+  var response = await request.close();
+  var content = await response.transform(utf8.decoder).join();
+
+  if (response.statusCode.toString()[0] != "2") {
+    print(response.statusCode);
+    return false;
+  }
+
+  var document = parse(content);
+  var article = document.getElementsByTagName("article")[0];
+  print("");
+  print(article.text);
+
+  return true;
 }

@@ -26,8 +26,12 @@ main(List<String> args) async {
   var input = await fetchInput(today);
 
   if (!runExamplesPart1(today, part1, args)) return;
-  printAnswer(part1(input));
+  var a1 = part1(input);
+  printAnswer(a1);
+  await submit1(today, a1, args);
 
   if (!runExamplesPart2(today, part2, args)) return;
-  printAnswer(part2(input));
+  var a2 = part2(input);
+  printAnswer(a2);
+  await submit2(today, a2, args);
 }
