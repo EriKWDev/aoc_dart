@@ -242,10 +242,14 @@ bool runExamples(DateTime date, Solver solver, [int part = 1, List<String>? args
       continue;
     }
 
-    // print("---");
-    // print(input);
-    // print("---");
-    var myAnswer = solver(input);
+    var value = solver(input);
+    var myAnswer = int.tryParse(value.toString()) ?? value;
+
+    if (myAnswer == null) {
+      print("$filename, part $part: SKIP: Solution returned null");
+      skipped++;
+      continue;
+    }
 
     var correctAnswer = part == 1 ? example.part1Answer : example.part2Answer;
 
@@ -309,4 +313,25 @@ Future<bool> submit(DateTime date, int part, dynamic answer, [List<String>? args
   print(article.text);
 
   return true;
+}
+
+List<List<T>> permutations<T>(List<T> source) {
+  List<List<T>> allPermutations = [];
+
+  permutate<E>(List<E> list, int cursor) {
+    if (cursor == list.length) {
+      allPermutations.add(list as List<T>);
+    }
+
+    for (int i = cursor; i < list.length; i++) {
+      List<E> permutation = List.from(list);
+      permutation[cursor] = list[i];
+      permutation[i] = list[cursor];
+      permutate(permutation, cursor + 1);
+    }
+  }
+
+  permutate<T>(source, 0);
+
+  return allPermutations;
 }

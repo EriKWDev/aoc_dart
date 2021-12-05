@@ -12,12 +12,12 @@ getData(String input) {
 
 part1(String input) {
   var data = getData(input);
-  return 0;
+  return null;
 }
 
 part2(String input) {
   var data = getData(input);
-  return 0;
+  return null;
 }
 
 var today = DateTime(2021, 12, 04);

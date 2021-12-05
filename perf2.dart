@@ -30,6 +30,11 @@ import "./solutions/2015/2015_02.dart" as solution201502;
 import "./solutions/2015/2015_03.dart" as solution201503;
 import "./solutions/2015/2015_04.dart" as solution201504;
 import "./solutions/2015/2015_05.dart" as solution201505;
+import "./solutions/2015/2015_06.dart" as solution201506;
+import "./solutions/2015/2015_07.dart" as solution201507;
+import "./solutions/2015/2015_08.dart" as solution201508;
+import "./solutions/2015/2015_09.dart" as solution201509;
+import "./solutions/2015/2015_10.dart" as solution201510;
 
 var allParts = {
   // 2021
@@ -59,6 +64,11 @@ var allParts = {
   solution201503.today: [solution201503.part1, solution201503.part2],
   solution201504.today: [solution201504.part1, solution201504.part2],
   solution201505.today: [solution201505.part1, solution201505.part2],
+  solution201506.today: [solution201506.part1, solution201506.part2],
+  solution201507.today: [solution201507.part1, solution201507.part2],
+  solution201508.today: [solution201508.part1, solution201508.part2],
+  solution201509.today: [solution201509.part1, solution201509.part2],
+  solution201510.today: [solution201510.part1, solution201510.part2],
 };
 
 class Result {
@@ -145,9 +155,10 @@ Future<Result> measurePart(Part part, String input, String name) async {
     }
   }
 
-  print("Done measuring $name");
+  var result = Result(timesRun: n, totalTime: totalTime, name: name);
+  print("Done measuring $name (${result.averageTime})");
 
-  return Result(timesRun: n, totalTime: totalTime, name: name);
+  return result;
 }
 
 void main(List<String> args) async {
