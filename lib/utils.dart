@@ -136,6 +136,9 @@ Future<String?> fetchInputFromAOC(DateTime date, String session, [int retries = 
 
   writeAutoInput(filename, content, date.year);
 
+  print(content);
+  print("");
+
   return content;
 }
 
