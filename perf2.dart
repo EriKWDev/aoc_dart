@@ -9,6 +9,7 @@ import "./solutions/2021/2021_02.dart" as solution202102;
 import "./solutions/2021/2021_03.dart" as solution202103;
 import "./solutions/2021/2021_04.dart" as solution202104;
 import "./solutions/2021/2021_05.dart" as solution202105;
+import "./solutions/2021/2021_06.dart" as solution202106;
 
 // 2020
 import "./solutions/2020/2020_19.dart" as solution202019;
@@ -35,6 +36,11 @@ import "./solutions/2015/2015_07.dart" as solution201507;
 import "./solutions/2015/2015_08.dart" as solution201508;
 import "./solutions/2015/2015_09.dart" as solution201509;
 import "./solutions/2015/2015_10.dart" as solution201510;
+import "./solutions/2015/2015_11.dart" as solution201511;
+import "./solutions/2015/2015_12.dart" as solution201512;
+import "./solutions/2015/2015_13.dart" as solution201513;
+import "./solutions/2015/2015_14.dart" as solution201514;
+import "./solutions/2015/2015_15.dart" as solution201515;
 
 var allParts = {
   // 2021
@@ -43,6 +49,7 @@ var allParts = {
   solution202103.today: [solution202103.part1, solution202103.part2],
   solution202104.today: [solution202104.part1, solution202104.part2],
   solution202105.today: [solution202105.part1, solution202105.part2],
+  solution202106.today: [solution202106.part1, solution202106.part2],
 
   // 2020
   solution202019.today: [solution202019.part1, solution202019.part2],
@@ -69,6 +76,11 @@ var allParts = {
   solution201508.today: [solution201508.part1, solution201508.part2],
   solution201509.today: [solution201509.part1, solution201509.part2],
   solution201510.today: [solution201510.part1, solution201510.part2],
+  solution201511.today: [solution201511.part1, solution201511.part2],
+  solution201512.today: [solution201512.part1, solution201512.part2],
+  solution201513.today: [solution201513.part1, solution201513.part2],
+  solution201514.today: [solution201514.part1, solution201514.part2],
+  solution201515.today: [solution201515.part1, solution201515.part2],
 };
 
 class Result {
@@ -182,7 +194,7 @@ void main(List<String> args) async {
     concurrent.addAll([r1, r2]);
 
     if (concurrent.length > 2) {
-      await Future.wait(concurrent);
+      await Future.any(concurrent);
       concurrent.clear();
     }
   }
