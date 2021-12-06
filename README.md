@@ -5,9 +5,9 @@ Don't forget to have `AOC_SESSION=<your_session_token>` loaded into your environ
 
 
 ## Performance
-`perf.dart` compiles all solutions to executables, runs them as many times as it can in 20 seconds (or until it has been run 100 times), and takes the average execution time. Remember that every solution runs both part1 and part2, but at least it skips the examples/unit tests since it passes `--performance` as an argument to each executable.
+`perf2.dart` imports all solutions and runs part1 and part2 separately, ignoring any example inputs. It fetches the input at the start and then just calls the solutions with that input which means that the time it takes to "get the input" is not part of the measurement. `perf.sh` will compile and run `perf2.dart` which in turn will compile and run every solution for every part for every year.
 
-Note: `0.0000 ms` most likely means not implemented.
+Note: `0.0000 ms` most likely means a solution to that part has not been implemented.
 
 <details>
 <summary>Every part, every year by performance</summary>

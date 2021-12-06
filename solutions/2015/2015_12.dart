@@ -48,8 +48,6 @@ int countNumbers2(dynamic data) {
     return score;
   }
 
-  if (data is Map<String, dynamic>) {}
-
   return score;
 }
 
