@@ -41,6 +41,8 @@ import "./solutions/2015/2015_12.dart" as solution201512;
 import "./solutions/2015/2015_13.dart" as solution201513;
 import "./solutions/2015/2015_14.dart" as solution201514;
 import "./solutions/2015/2015_15.dart" as solution201515;
+import "./solutions/2015/2015_16.dart" as solution201516;
+import "./solutions/2015/2015_17.dart" as solution201517;
 
 var allParts = {
   // 2021
@@ -81,6 +83,8 @@ var allParts = {
   solution201513.today: [solution201513.part1, solution201513.part2],
   solution201514.today: [solution201514.part1, solution201514.part2],
   solution201515.today: [solution201515.part1, solution201515.part2],
+  solution201516.today: [solution201516.part1, solution201516.part2],
+  solution201517.today: [solution201517.part1, solution201517.part2],
 };
 
 class Result {

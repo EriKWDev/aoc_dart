@@ -18,9 +18,7 @@ int calculateFuel2(List<int> positions) {
 
     for (int j = 0; j < positions.length; j++) {
       var distance = (position - positions[j]).abs();
-      int f = (distance * (distance + 1)) ~/ 2;
-
-      score += f;
+      score += (distance * (distance + 1)) ~/ 2;
     }
 
     if (score < best) {
@@ -52,7 +50,6 @@ int calculateFuel1(List<int> positions) {
 
 part1(String input) {
   var data = getData(input);
-
   return calculateFuel1(data);
 }
 

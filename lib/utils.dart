@@ -333,40 +333,34 @@ Future<bool> submit(DateTime date, int part, dynamic answer, [List<String>? args
   return true;
 }
 
-List<List<T>> permutations<T>(List<T> source) {
-  List<List<T>> allPermutations = [];
-
-  permutate<E>(List<E> list, int cursor) {
-    if (cursor == list.length) {
-      allPermutations.add(list as List<T>);
-    }
-
-    for (int i = cursor; i < list.length; i++) {
-      List<E> permutation = List.from(list);
-      permutation[cursor] = list[i];
-      permutation[i] = list[cursor];
-      permutate(permutation, cursor + 1);
+Iterable<List<T>> permutations<T>(List<T> values) sync* {
+  if (values.length <= 1) {
+    yield values;
+  } else {
+    for (var perm in permutations(values.sublist(1))) {
+      for (int i = 0; i < values.length; i++) {
+        int j = i >= 0 ? i : perm.length - i;
+        yield [...perm.sublist(0, j), values.first, ...perm.sublist(j)];
+      }
     }
   }
-
-  permutate<T>(source, 0);
-
-  return allPermutations;
 }
 
-Iterable<List<T>> combinations<T>(
-  List<List<T>> lists, [
-  int index = 0,
-  List<T>? prefix,
-]) sync* {
-  prefix ??= <T>[];
-
-  if (lists.length == index) {
-    yield prefix.toList();
+Iterable<List<T>> combinations<T>(List<T> values, [int length = 0]) sync* {
+  if (length <= 0) {
+    yield [];
   } else {
-    for (final value in lists[index]) {
-      yield* combinations(lists, index + 1, prefix..add(value));
-      prefix.removeLast();
+    for (int i = length - 1; i < values.length; i++) {
+      for (var combination in combinations(values.sublist(0, i >= 0 ? i : values.length - i), length - 1)) {
+        combination.add(values[i]);
+        yield combination;
+      }
     }
+  }
+}
+
+Iterable<List<T>> allCombinations<T>(List<T> values) sync* {
+  for (int i = 1; i <= values.length; i++) {
+    yield* combinations(values, i);
   }
 }
