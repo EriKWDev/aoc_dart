@@ -153,7 +153,7 @@ Future<Result> measurePart(Part part, String input, String name) async {
 
   while (!done) {
     var stopWatch = Stopwatch()..start();
-    var answer = part(input);
+    part(input);
     stopWatch.stop();
     // print("Answer: $answer ($done)");
 
