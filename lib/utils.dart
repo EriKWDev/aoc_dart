@@ -55,7 +55,22 @@ File getInputFile(String filename, [int? year]) {
 }
 
 String getSession() {
-  return Platform.environment["AOC_SESSION"] ?? jsonDecode(File("env.json").readAsStringSync())["sessions"][0]!;
+  String? session = Platform.environment["AOC_SESSION"];
+
+  if (session != null) return session;
+
+  var dir = Directory.current.path;
+
+  while (!File("$dir${Platform.pathSeparator}env.json").existsSync()) {
+    var split = dir.split(Platform.pathSeparator);
+    split.removeLast();
+    dir = split.join(Platform.pathSeparator);
+    if (dir.length <= 1) {
+      throw "Cannot find AOC_SESSION in environment nor the file env.json";
+    }
+  }
+
+  return jsonDecode(File("$dir${Platform.pathSeparator}env.json").readAsStringSync())["sessions"][0]!;
 }
 
 String aocFilename(DateTime date, String session) {
