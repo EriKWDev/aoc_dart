@@ -13,16 +13,12 @@ int calculateFuel2(List<int> positions) {
   int best = 9999999999;
   positions.sort();
 
-  for (int position = 0; position <= positions.last; position++) {
+  for (int position = positions.first; position <= positions.last; position++) {
     int score = 0;
 
     for (int j = 0; j < positions.length; j++) {
       var distance = (position - positions[j]).abs();
-      int f = 0;
-
-      for (int i = 1; i <= distance; i++) {
-        f += i;
-      }
+      int f = (distance * (distance + 1)) ~/ 2;
 
       score += f;
     }
@@ -39,7 +35,7 @@ int calculateFuel1(List<int> positions) {
   int best = 9999999999;
   positions.sort();
 
-  for (int position = 0; position <= positions.last; position++) {
+  for (int position = positions.first; position <= positions.last; position++) {
     int score = 0;
 
     for (int j = 0; j < positions.length; j++) {
