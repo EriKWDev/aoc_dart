@@ -1,5 +1,5 @@
-# Advent of Code 2021
-All solutions can be found in the `solutions` folder.
+# Advent of Code
+All solutions can be found in the `solutions` folder. During 2021, I began solving in dart, but I switched to Nim after day 7 because I missed tuples soo much. See my Nim repo here: [`aoc_nim`](https://github.com/EriKWDev/aoc_nim)
 ## Usage
 Don't forget to have `AOC_SESSION=<your_session_token>` loaded into your environment in order to use dynamic loading of input files as well as automatic submission. Alternatively, you can create a `env.json` with the content `{"sessions": ["<your_session_token>"]}`
 
