@@ -158,6 +158,13 @@ Future<String?> fetchInputFromAOC(DateTime date, String session, [int retries = 
 }
 
 Future<String> fetchInput(DateTime date, [String? session]) async {
+  // "Hack" to create the input file for the first example before anything else
+  {
+    var daySring = date.day.toString().padLeft(2, "0");
+    var filename = "${date.year}_${daySring}_1.txt";
+    getInputFile(filename, date.year);
+  }
+
   session ??= getSession();
 
   String? content;
@@ -326,9 +333,18 @@ Future<bool> submit(DateTime date, int part, dynamic answer, [List<String>? args
   }
 
   var document = parse(content);
-  var article = document.getElementsByTagName("article")[0];
+  var articles = document.getElementsByTagName("article");
+
+  if (articles.length == 0) {
+    print("ERROR: Something seems wrong:");
+    print(document.getElementsByTagName("body")[0].text);
+
+    return false;
+  }
+
+  var article = articles[0].text;
   print("");
-  print(article.text);
+  print("> $article");
 
   return true;
 }

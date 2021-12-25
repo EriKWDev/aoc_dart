@@ -43,8 +43,9 @@ import "./solutions/2015/2015_14.dart" as solution201514;
 import "./solutions/2015/2015_15.dart" as solution201515;
 import "./solutions/2015/2015_16.dart" as solution201516;
 import "./solutions/2015/2015_17.dart" as solution201517;
+import "./solutions/2015/2015_18.dart" as solution201518;
 
-var allParts = {
+final allParts = {
   // 2021
   solution202101.today: [solution202101.part1, solution202101.part2],
   solution202102.today: [solution202102.part1, solution202102.part2],
@@ -85,6 +86,7 @@ var allParts = {
   solution201515.today: [solution201515.part1, solution201515.part2],
   solution201516.today: [solution201516.part1, solution201516.part2],
   solution201517.today: [solution201517.part1, solution201517.part2],
+  solution201518.today: [solution201518.part1, solution201518.part2],
 };
 
 class Result {
